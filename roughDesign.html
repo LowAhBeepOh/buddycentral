@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buddy Central (poor design)</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: 'Inter Tight', sans-serif;
+      }
+      .demo {
+        position: relative;
+        background: #d6ccbc;
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+        width: 100%;
+        max-width: 1440px;
+        margin: 0 auto;
+      }
+      .underlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 20vh;
+        background: linear-gradient(180deg, #8e3700 10%, #d6ccbc 100%);
+        z-index: 0;
+      }
+      .apps {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1rem;
+        width: 90%;
+        max-width: 1284px;
+        margin: 1rem auto;
+        position: relative;
+        z-index: 1;
+      }
+      .app-card {
+        background: #f2f2e3;
+        box-shadow: 0 2px 4px #582500;
+        border-radius: 64px;
+        border: 2px solid #feffe4;
+        padding: 1rem;
+        text-align: center;
+        cursor: pointer;
+      }
+      .app-card .app-icon {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        margin: 0 auto 1rem;
+      }
+      .app-card .app-title {
+        color: #74735f;
+        font-size: 1.5rem;
+        font-weight: 500;
+      }
+      .docs .app-icon { background: #4d85ff; }
+      .music .app-icon { background: #e28dff; }
+      .musicstudio .app-icon { background: #df81ff; }
+      .compactb .app-icon { background: #00d068; }
+      .content {
+        flex-grow: 1;
+        background: #f2f2e3;
+        box-shadow: 0 2px 4px #582500;
+        border-top-left-radius: 64px;
+        border-top-right-radius: 64px;
+        border: 1px solid rgba(254, 255, 228, 0.2);
+        width: 90%;
+        max-width: 1284px;
+        margin: 1rem auto 0;
+        padding: 16px 2rem 2rem;
+        position: relative;
+        z-index: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      .content .files {
+        text-align: center;
+        color: #454545;
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+      }
+      .content .your-files {
+        text-align: center;
+        color: #777777;
+        font-size: 1.5rem;
+        font-weight: 400;
+        margin-top: auto;
+      }
+      @media (max-width: 768px) {
+        .content {
+          padding: 16px 1rem 1rem;
+        }
+      }
+      .toast {
+        display: none;
+        position: fixed;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: rgba(0, 0, 0, 0.8);
+        color: #fff;
+        padding: 10px 20px;
+        border-radius: 8px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="demo">
+      <div class="underlay"></div>
+      <div class="apps">
+        <div class="app-card docs" onclick="location.href='https://lowahbeepoh.github.io/buddydocs-minimal'">
+          <div class="app-icon"></div>
+          <div class="app-title">Buddy Docs</div>
+        </div>
+        <div class="app-card music" onclick="location.href='https://lowahbeepoh.github.io/buddymusic'">
+          <div class="app-icon"></div>
+          <div class="app-title">Buddy Music</div>
+        </div>
+        <div class="app-card musicstudio" onclick="location.href='https://lowahbeepoh.github.io/buddymusic-studio'">
+          <div class="app-icon"></div>
+          <div class="app-title">Buddy Music Studio</div>
+        </div>
+        <div class="app-card compactb" onclick="showToast()">
+          <div class="app-icon"></div>
+          <div class="app-title">CompactB</div>
+        </div>
+      </div>
+      <div class="content">
+        <div class="files">Files</div>
+        <div class="your-files">Your files will appear here</div>
+      </div>
+    </div>
+    <script>
+      console.log("meow - svgs arent added")
+    </script>
+  </body>
+</html>
