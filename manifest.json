@@ -1,0 +1,17 @@
+{
+  "name": "Buddy Central",
+  "short_name": "BuddyCentral",
+  "display": "standalone",
+  "display_override": ["tabbed"],
+  "start_url": "/",
+  "background_color": "#d6ccbc",
+  "theme_color": "#8e3700",
+  "icons": [
+    {
+      "src": "assets/buddycentralAppIcon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
