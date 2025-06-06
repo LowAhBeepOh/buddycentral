@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8">
@@ -12,33 +12,157 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500&display=swap" rel="stylesheet">
     <style>
-      body {
+    body {
         margin: 0;
-        padding: 2rem;
+        padding: 32px;
         font-family: 'Inter Tight', sans-serif;
-        background: #d6ccbc;
+        background: linear-gradient(135deg, #d6ccbc, #e8e3d9);
+        min-height: 100vh;
+        color: #2c1810;
       }
-      .welcome {
-        text-align: center;
-        font-size: 2rem;
-        margin-bottom: 2rem;
+      .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 3rem;
+        background: rgba(255, 255, 255, 0.1);
+        padding: 1rem 2rem;
+        border-radius: 1rem;
+        backdrop-filter: blur(10px);
+      }
+      .profile-btn {
+        width: 56px;
+        height: 56px;
+        border-radius: 50%;
+        background: #f2f2e3;
+        border: 2px solid #8e3700;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0;
+        overflow: hidden;
+        transition: transform 0.2s, box-shadow 0.2s;
+      }
+      .profile-btn:hover {
+        transform: scale(1.05);
+        box-shadow: 0 4px 12px rgba(142, 55, 0, 0.3);
+      }
+      .profile-btn img, 
+      .profile-btn svg,
+      .profile-btn div {
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: cover;
+        border-radius: 50%;
+      }
+      .profile-btn svg {
+        width: 32px !important;
+        height: 32px !important;
+        color: #8e3700;
+      }
+      .settings-modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: #d6ccbc;
+        padding: 24px;
+        display: none;
+        z-index: 1000;
+      }
+      .settings-modal.active {
+        display: block;
+      }      .settings-container {
+        display: grid;
+        grid-template-columns: 280px 1fr;
+        gap: 0;
+        height: 100%;
+        background: rgba(242, 242, 227, 0.95);
+        border-radius: 1.2rem;
+        overflow: hidden;
+        box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+        backdrop-filter: blur(10px);
+      }
+      .settings-nav {
+        background: rgba(232, 232, 213, 0.5);
+        padding: 32px 24px;
+        border-right: 1px solid rgba(142, 55, 0, 0.1);
+      }
+      .settings-content {
+        padding: 32px;
+        overflow-y: auto;
+      }
+      .nav-item {
+        padding: 14px 20px;
+        cursor: pointer;
+        border-radius: 10px;
+        margin-bottom: 8px;
+        transition: all 0.2s;
+        color: #2c1810;
+      }
+      .nav-item:hover {
+        background: rgba(142, 55, 0, 0.05);
+      }
+      .nav-item.active {
+        background: #8e3700;
+        color: #f2f2e3;
         font-weight: 500;
-        color: #333;
+      }      .close-settings {
+        position: absolute;
+        top: 32px;
+        right: 32px;
+        background: rgba(255, 255, 255, 0.9);
+        border: 2px solid #8e3700;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        cursor: pointer;
+        font-size: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #8e3700;
+        transition: all 0.2s;
+        z-index: 1001;
+      }
+      .close-settings:hover {
+        background: #8e3700;
+        color: white;
+        transform: scale(1.05);
+      }.welcome {
+        text-align: left;
+        font-size: 2.5rem;
+        font-weight: 500;
+        color: #8e3700;
+        margin: 0;
       }
       .apps {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        gap: 1rem;
-        max-width: 1000px;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 1.5rem;
+        max-width: 1200px;
         margin: 0 auto;
       }
       .app-card {
-        background: #f2f2e3;
-        border-radius: 1rem;
-        padding: 1rem;
+        background: rgba(242, 242, 227, 0.9);
+        border-radius: 1.2rem;
+        padding: 1.5rem;
         text-align: center;
         cursor: pointer;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        transition: transform 0.2s, box-shadow 0.2s;
+        border: 1px solid rgba(142, 55, 0, 0.1);
+      }
+      .app-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+      }
+      .app-title {
+        margin-top: 1rem;
+        font-weight: 500;
+        color: #8e3700;
       }
       .app-icon {
         width: 48px;
@@ -57,10 +181,96 @@
         opacity: 0.6;
         cursor: not-allowed;
       }
+      .form-group {
+        margin-bottom: 1.5rem;
+      }
+      .form-group label {
+        display: block;
+        margin-bottom: 0.5rem;
+        color: #2c1810;
+        font-weight: 500;
+      }
+      .form-control {
+        width: 100%;
+        padding: 0.75rem;
+        border: 1px solid rgba(142, 55, 0, 0.2);
+        border-radius: 0.5rem;
+        background: rgba(255, 255, 255, 0.9);
+        font-family: inherit;
+        font-size: 1rem;
+        color: #2c1810;
+      }
+      .form-control:focus {
+        outline: none;
+        border-color: #8e3700;
+        box-shadow: 0 0 0 2px rgba(142, 55, 0, 0.1);
+      }
+      .profile-picture-preview {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        background-size: cover;
+        background-position: center;
+        margin-bottom: 1rem;
+        border: 2px solid #8e3700;
+      }
+      .save-btn {
+        background: #8e3700;
+        color: #f2f2e3;
+        border: none;
+        padding: 0.75rem 1.5rem;
+        border-radius: 0.5rem;
+        font-family: inherit;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+      .save-btn:hover {
+        background: #6b2900;
+        transform: translateY(-1px);
+      }
     </style>
   </head>
   <body>
-    <div class="welcome">Welcome</div>
+    <div class="header">
+      <div class="welcome">Welcome</div>
+      <button class="profile-btn" onclick="toggleSettings()">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="4"></circle>
+          <path d="M16 8v5a3 3 0 0 0 6 0v-1a10 10 0 1 0-3.92 7.94"></path>
+        </svg>
+      </button>
+    </div>
+    
+    <div class="settings-modal">
+      <button class="close-settings" onclick="toggleSettings()">×</button>
+      <div class="settings-container">
+        <div class="settings-nav">
+          <div class="nav-item active">User</div>
+          <div class="nav-item">Data</div>
+          <div class="nav-item">About</div>
+        </div>
+        <div class="settings-content">
+          <h2>User Profile</h2>
+          <form id="userProfileForm">
+            <div class="form-group">
+              <label for="profilePicture">Profile Picture</label>
+              <div id="profilePicturePreview" class="profile-picture-preview"></div>
+              <input type="file" id="profilePicture" accept="image/*" class="form-control">
+            </div>
+            <div class="form-group">
+              <label for="name">Full Name</label>
+              <input type="text" id="name" class="form-control" placeholder="Enter your full name">
+            </div>
+            <div class="form-group">
+              <label for="nickname">Nickname</label>
+              <input type="text" id="nickname" class="form-control" placeholder="What should we call you?">
+            </div>
+            <button type="submit" class="save-btn">Save Profile</button>
+          </form>
+        </div>
+      </div>
+    </div>
     <div class="apps">
       <div class="app-card docs" onclick="location.href='https://lowahbeepoh.github.io/buddydocs'">
         <div class="app-icon"></div>
@@ -83,7 +293,104 @@
         <div class="app-title">CompactB UI</div>
       </div>
     </div>
+    <script src="js/database.js"></script>
     <script>
+    function toggleSettings() {
+        const modal = document.querySelector('.settings-modal');
+        modal.classList.toggle('active');
+        
+        // Add escape key listener when modal is opened
+        if (modal.classList.contains('active')) {
+          document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+              modal.classList.remove('active');
+            }
+          });
+        }
+      }
+      
+      // Handle settings navigation
+      document.querySelectorAll('.nav-item').forEach(item => {
+        item.addEventListener('click', () => {
+          document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+          item.classList.add('active');
+        });
+      });
+
+      // Handle profile picture selection
+      document.getElementById('profilePicture').addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                document.getElementById('profilePicturePreview').style.backgroundImage = `url(${e.target.result})`;
+            }
+            reader.readAsDataURL(file);
+        }
+    });
+
+    // Handle form submission
+    document.getElementById('userProfileForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        const name = document.getElementById('name').value;
+        const nickname = document.getElementById('nickname').value;
+        const profilePicture = document.getElementById('profilePicture').files[0];
+        
+        let userpfp = '';
+        if (profilePicture) {
+            userpfp = await new Promise((resolve) => {
+                const reader = new FileReader();
+                reader.onload = (e) => resolve(e.target.result);
+                reader.readAsDataURL(profilePicture);
+            });
+        }
+
+        const userProfile = {
+            name,
+            nickname,
+            userpfp
+        };
+
+        try {
+            await saveUserProfile(userProfile);
+            alert('Profile saved successfully!');
+            loadUserProfile(); // Refresh displayed profile
+        } catch (error) {
+            console.error('Error saving profile:', error);
+            alert('Failed to save profile. Please try again.');
+        }
+    });
+
+    // Load user profile
+    async function loadUserProfile() {
+        try {
+            const profile = await getUserProfile();
+            if (profile) {
+                document.getElementById('name').value = profile.name || '';
+                document.getElementById('nickname').value = profile.nickname || '';
+                if (profile.userpfp) {
+                    document.getElementById('profilePicturePreview').style.backgroundImage = `url(${profile.userpfp})`;
+                }
+                
+                // Update welcome message with nickname or name
+                const welcomeMessage = document.querySelector('.welcome');
+                welcomeMessage.textContent = `Welcome, ${profile.nickname || profile.name || 'Guest'}`;
+
+                // Update profile button with profile picture if available
+                const profileBtn = document.querySelector('.profile-btn');
+                if (profile.userpfp) {
+                    profileBtn.innerHTML = `<div style="width: 24px; height: 24px; border-radius: 50%; background-size: cover; background-position: center; background-image: url(${profile.userpfp})"></div>`;
+                }
+            }
+        } catch (error) {
+            console.error('Error loading profile:', error);
+        }
+    }
+
+    // Initialize profile on page load
+    loadUserProfile();
+
       if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
           navigator.serviceWorker.register('./sw.js').then(registration => {
